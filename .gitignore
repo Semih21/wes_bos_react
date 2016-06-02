@@ -1,0 +1,24 @@
+01 - Introduction - Start Here
+04 - Writing HTML with JSX
+05 - Creating our application layout with components
+06 - Passing dyanmic data with Props
+07 - React Router
+09 - The React Event System
+10 - State
+12 - Displaying State with JSX
+13 - Adding fish to an order
+14 - Displaying our Order State with JSX
+15 - Persisting State Data with Firebase
+16 - Persisting State Data with localStorage
+17 - Three Way Data Binding
+18 - Updating  + Removing State Items
+19 - React Animations
+20 - Proptypes
+21 - ES6 Modules
+23 - ES6 Classes
+29 - Firebase Authentication
+Final Codebase
+
+node_modules/
+npm-debug.log
+build/
