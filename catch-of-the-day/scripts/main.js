@@ -13,7 +13,7 @@ var h = require('./helpers');
 //firebase
 
 var Rebase = require('re-base');
-var base = Rebase.createClass('https://catch-of-the-day-2657d.firebaseio.com/');
+var base = Rebase.createClass('https://crackling-heat.firebaseio.com/');
 
 /*
   App
