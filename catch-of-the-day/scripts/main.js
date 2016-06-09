@@ -20,22 +20,39 @@ var base = Rebase.createClass('https://crackling-heat.firebaseio.com/');
   <App />
 */
 var App = React.createClass({
+
   getInitialState: function(){
     return {
       fishes: {},
       order: {}
     }
   },
-  componentDidMount:function(){
+
+  componentDidMount: function(){
     base.syncState(this.props.params.storeId + '/fishes', {
       context:this,
       state: 'fishes'
     });
+
+    var localStorageRef = localStorage.getItem('order-'+ this.props.params.storeId);
+
+    if(localStorageRef){
+      //update componenent state to reflect what is in localStorage
+      this.setState({
+        order: JSON.parse(localStorageRef)
+      });
+    }
   },
+
+  componentWillUpdate: function(nextProps, nextState){
+    localStorage.setItem('order-' + this.props.params.storeId, JSON.stringify(nextState.order));
+  },
+
   addToOrder: function(key){
     this.state.order[key] = this.state.order[key] + 1 || 1;
     this.setState({order: this.state.order})
   },
+
   addFish: function(fish){
     var timestamp = (new Date()).getTime();
     // update the state object
@@ -43,14 +60,17 @@ var App = React.createClass({
     // set the state
     this.setState({fishes: this.state.fishes});
   },
+
   loadSamples: function(){
     this.setState({
       fishes: require('./sample-fishes')
     });
   },
+
   renderFish: function(key){
     return <Fish key={key} index={key} details={this.state.fishes[key]} addToOrder={this.addToOrder}/>
   },
+
   render: function(){
     return(
       <div className='catch-of-the-day'>
@@ -72,9 +92,11 @@ var App = React.createClass({
   <Fish />
 */
 var Fish = React.createClass({
+
   onButtonClick: function(){
     this.props.addToOrder(this.props.index);
   },
+
   render: function(){
     var details = this.props.details;
     var isAvailable = (details.status === 'available' ? true : false);
@@ -99,6 +121,7 @@ var Fish = React.createClass({
 */
 
 var AddFishForm = React.createClass({
+
   createFish: function(event){
     // stop the form from submitting
     event.preventDefault();
@@ -114,6 +137,7 @@ var AddFishForm = React.createClass({
     this.props.addFish(fish);
     this.refs.fishForm.reset();
   },
+
   render: function() {
     return (
       <form className="fish-edit" ref="fishForm" onSubmit={this.createFish}>
@@ -137,6 +161,7 @@ var AddFishForm = React.createClass({
 */
 
 var Header = React.createClass({
+
   render: function(){
     return(
       <header className='top'>
@@ -159,15 +184,15 @@ var Header = React.createClass({
 */
 
 var Order = React.createClass({
+
   renderOrder: function(key){
       var fish = this.props.fishes[key];
       var count = this.props.order[key];
       if(!fish) {
         return <li key={key}>Sorry, fish is no longer available</li>
       }
-
       return (
-        <li>
+        <li key={key}>
           <span>{count}lbs</span>
           <span>{fish.name}</span>
           <span className='price'>{h.formatPrice(count * fish.price)}</span>
@@ -175,6 +200,7 @@ var Order = React.createClass({
       )
 
   },
+
   render: function(){
     var orderIds = Object.keys(this.props.order);
     var total = orderIds.reduce((prevTotal, key) =>{
@@ -210,6 +236,7 @@ var Order = React.createClass({
 */
 
 var Inventory = React.createClass({
+
   render: function(){
     return(
       <div>
@@ -230,6 +257,7 @@ var Inventory = React.createClass({
 
 var StorePicker = React.createClass({
   mixins: [History],
+
   goToStore: function(event){
     event.preventDefault();
     // get the data from the input
