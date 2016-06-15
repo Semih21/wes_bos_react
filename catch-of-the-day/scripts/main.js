@@ -192,6 +192,9 @@ var Header = React.createClass({
         <h3 className='tagline'><span>{this.props.tagline}</span></h3>
       </header>
     )
+  },
+  propTypes : {
+    tagline: React.PropTypes.string.isRequired
   }
 });
 
@@ -212,7 +215,7 @@ var Order = React.createClass({
       }
       return (
         <li key={key}>
-          
+
           <CSSTransitionGroup
             component='span'
             transitionName='count'
@@ -263,6 +266,11 @@ var Order = React.createClass({
         </CSSTransitionGroup>
       </div>
     )
+  },
+  propTypes : {
+    fishes: React.PropTypes.object.isRequired,
+    order: React.PropTypes.object.isRequired,
+    removeFromOrder: React.PropTypes.func.isRequired
   }
 });
 
@@ -298,6 +306,13 @@ var Inventory = React.createClass({
       </div>
 
     )
+  },
+  propTypes : {
+    fishes: React.PropTypes.object.isRequired,
+    addFish: React.PropTypes.func.isRequired,
+    removeFish: React.PropTypes.func.isRequired,
+    loadSamples: React.PropTypes.func.isRequired,
+    linkState: React.PropTypes.func.isRequired
   }
 });
 
