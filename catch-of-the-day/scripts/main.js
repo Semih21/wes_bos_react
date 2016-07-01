@@ -4,7 +4,7 @@ import { Router, Route } from 'react-router';
 import { createHistory } from 'history';
 
 /*
-  import componenents
+  import components
 */
 
 import App from './components/App';
